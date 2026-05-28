@@ -1,0 +1,47 @@
+export const REGIONS = [
+  "Île-de-France",
+  "Auvergne-Rhône-Alpes",
+  "Provence-Alpes-Côte d'Azur",
+  "Occitanie",
+  "Nouvelle-Aquitaine",
+  "Hauts-de-France",
+  "Grand Est",
+  "Pays de la Loire",
+  "Bretagne",
+  "Normandie",
+  "Bourgogne-Franche-Comté",
+  "Centre-Val de Loire",
+];
+
+export const SUBJECTS = [
+  "Mathématiques",
+  "Physique-Chimie",
+  "SVT",
+  "NSI",
+  "SES",
+  "Français",
+  "Philosophie",
+  "Histoire-Géographie",
+  "LV1 Anglais",
+  "LV2 Espagnol",
+  "HGGSP",
+  "HLP",
+  "EPS",
+];
+
+export const DOMAINS = [
+  "Sciences",
+  "Informatique",
+  "Économie",
+  "Gestion",
+  "Commerce",
+  "Droit",
+  "Lettres",
+  "Langues",
+  "Psychologie",
+  "Histoire",
+  "Sciences sociales",
+  "Sciences politiques",
+  "Communication",
+  "Sport",
+];
