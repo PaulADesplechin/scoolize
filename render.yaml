@@ -1,0 +1,18 @@
+# Blueprint Render pour l'API Scoolize.
+# Render > New > Blueprint > connecter le repo : ce fichier est lu automatiquement.
+services:
+  - type: web
+    name: scoolize-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://scoolize.vercel.app # ← à remplacer par l'URL réelle du front Vercel
+      # SQLite (fichier éphémère sur Render — réinitialisé à chaque déploiement).
+      # Pour persister, créez une base PostgreSQL Render et pointez DATABASE_URL dessus.
+      - key: DATABASE_URL
+        value: sqlite:////app/scoolize.db
