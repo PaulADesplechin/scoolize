@@ -1,0 +1,51 @@
+name,institution,type,domain,city,region,capacity,admission_rate,min_average,key_subjects
+CPGE MPSI,Lycée Louis-le-Grand,selective,Sciences,Paris,Île-de-France,144,0.08,16.5,Mathématiques:0.5;Physique-Chimie:0.3;NSI:0.2
+CPGE MPSI,Lycée du Parc,selective,Sciences,Lyon,Auvergne-Rhône-Alpes,90,0.12,15.5,Mathématiques:0.5;Physique-Chimie:0.3;NSI:0.2
+CPGE PCSI,Lycée Stanislas,selective,Sciences,Paris,Île-de-France,96,0.14,15.0,Mathématiques:0.4;Physique-Chimie:0.4;SVT:0.2
+CPGE PCSI,Lycée Pierre-de-Fermat,selective,Sciences,Toulouse,Occitanie,90,0.18,14.5,Mathématiques:0.4;Physique-Chimie:0.4;SVT:0.2
+CPGE PTSI,Lycée Hoche,selective,Sciences,Versailles,Île-de-France,48,0.20,14.0,Mathématiques:0.4;Physique-Chimie:0.3;NSI:0.3
+CPGE BCPST,Lycée Sainte-Geneviève,selective,Sciences,Versailles,Île-de-France,48,0.10,15.5,SVT:0.4;Physique-Chimie:0.3;Mathématiques:0.3
+CPGE BCPST,Lycée Champollion,selective,Sciences,Grenoble,Auvergne-Rhône-Alpes,44,0.22,13.5,SVT:0.4;Physique-Chimie:0.3;Mathématiques:0.3
+CPGE ECG,Lycée Saint-Louis,selective,Économie,Paris,Île-de-France,90,0.16,14.5,Mathématiques:0.4;SES:0.3;LV1 Anglais:0.3
+CPGE ECG,Lycée Thiers,selective,Économie,Marseille,Provence-Alpes-Côte d'Azur,80,0.25,13.0,Mathématiques:0.4;SES:0.3;LV1 Anglais:0.3
+CPGE Lettres A/L,Lycée Henri-IV,selective,Lettres,Paris,Île-de-France,72,0.15,15.0,Français:0.3;Philosophie:0.3;Histoire-Géographie:0.2;LV1 Anglais:0.2
+CPGE Lettres B/L,Lycée Fénelon,selective,Lettres,Paris,Île-de-France,48,0.18,14.5,Français:0.25;Mathématiques:0.25;Histoire-Géographie:0.25;Philosophie:0.25
+CPGE Lettres A/L,Lycée Condorcet,selective,Lettres,Paris,Île-de-France,48,0.28,13.5,Français:0.3;Philosophie:0.3;Histoire-Géographie:0.2;LV1 Anglais:0.2
+BUT Informatique,IUT de Villetaneuse,selective,Informatique,Villetaneuse,Île-de-France,112,0.30,12.5,Mathématiques:0.4;NSI:0.4;Physique-Chimie:0.2
+BUT Informatique,IUT Lyon 1,selective,Informatique,Lyon,Auvergne-Rhône-Alpes,104,0.28,13.0,Mathématiques:0.4;NSI:0.4;Physique-Chimie:0.2
+BUT Réseaux et Télécoms,IUT de Blagnac,selective,Informatique,Blagnac,Occitanie,78,0.35,11.5,Mathématiques:0.4;NSI:0.3;Physique-Chimie:0.3
+BUT Gestion des Entreprises et Administrations,IUT de Sceaux,selective,Gestion,Sceaux,Île-de-France,130,0.32,12.0,Mathématiques:0.3;SES:0.4;LV1 Anglais:0.3
+BUT Génie Électrique et Informatique Industrielle,IUT de Cachan,selective,Sciences,Cachan,Île-de-France,96,0.34,11.5,Mathématiques:0.4;Physique-Chimie:0.4;NSI:0.2
+BUT Métiers du Multimédia et de l'Internet,IUT Bordeaux Montaigne,selective,Communication,Bordeaux,Nouvelle-Aquitaine,84,0.30,12.0,Français:0.4;LV1 Anglais:0.3;NSI:0.3
+BUT Techniques de Commercialisation,IUT de Lille,selective,Commerce,Lille,Hauts-de-France,120,0.33,11.5,SES:0.3;LV1 Anglais:0.4;Français:0.3
+BUT Génie Civil - Construction Durable,IUT de Nantes,selective,Sciences,Nantes,Pays de la Loire,78,0.36,11.0,Mathématiques:0.4;Physique-Chimie:0.4;SVT:0.2
+Cycle Ingénieur,INSA Lyon,selective,Sciences,Lyon,Auvergne-Rhône-Alpes,950,0.11,15.5,Mathématiques:0.4;Physique-Chimie:0.4;NSI:0.2
+Cycle Ingénieur,INSA Toulouse,selective,Sciences,Toulouse,Occitanie,500,0.13,15.0,Mathématiques:0.4;Physique-Chimie:0.4;NSI:0.2
+Cycle Préparatoire Intégré,UTC Compiègne,selective,Sciences,Compiègne,Hauts-de-France,400,0.16,14.5,Mathématiques:0.4;Physique-Chimie:0.3;NSI:0.3
+Cycle Préparatoire PeiP,Polytech Paris-Saclay,selective,Sciences,Orsay,Île-de-France,250,0.22,13.5,Mathématiques:0.4;Physique-Chimie:0.3;NSI:0.3
+Bachelor Ingénierie,ECE Paris,selective,Sciences,Paris,Île-de-France,300,0.40,12.5,Mathématiques:0.4;Physique-Chimie:0.3;NSI:0.3
+Global BBA,ESSEC Business School,selective,Commerce,Cergy,Île-de-France,200,0.10,15.0,SES:0.3;LV1 Anglais:0.4;Mathématiques:0.3
+Bachelor,KEDGE Business School,selective,Commerce,Bordeaux,Nouvelle-Aquitaine,350,0.45,12.0,SES:0.3;LV1 Anglais:0.4;Français:0.3
+Bachelor of Arts,Sciences Po Paris,selective,Sciences politiques,Paris,Île-de-France,1500,0.10,15.5,Histoire-Géographie:0.3;HGGSP:0.3;LV1 Anglais:0.2;Français:0.2
+Licence Droit,Université Paris 1 Panthéon-Sorbonne,non_selective,Droit,Paris,Île-de-France,1200,0.65,,Français:0.3;Histoire-Géographie:0.3;HGGSP:0.2;Philosophie:0.2
+Licence Droit,Université Paris-Panthéon-Assas,non_selective,Droit,Paris,Île-de-France,1500,0.60,,Français:0.3;Histoire-Géographie:0.3;HGGSP:0.2;Philosophie:0.2
+Licence Droit,Université Jean Moulin Lyon 3,non_selective,Droit,Lyon,Auvergne-Rhône-Alpes,1000,0.80,,Français:0.3;Histoire-Géographie:0.3;HGGSP:0.2;Philosophie:0.2
+Licence Économie,Université Paris 1 Panthéon-Sorbonne,non_selective,Économie,Paris,Île-de-France,800,0.70,,Mathématiques:0.4;SES:0.4;LV1 Anglais:0.2
+Licence Économie-Gestion,Université de Rennes,non_selective,Économie,Rennes,Bretagne,700,0.85,,Mathématiques:0.4;SES:0.4;LV1 Anglais:0.2
+Licence Psychologie,Université Paris Cité,non_selective,Psychologie,Paris,Île-de-France,900,0.55,,SVT:0.3;Français:0.3;Philosophie:0.2;SES:0.2
+Licence Psychologie,Université Lumière Lyon 2,non_selective,Psychologie,Lyon,Auvergne-Rhône-Alpes,850,0.60,,SVT:0.3;Français:0.3;Philosophie:0.2;SES:0.2
+Licence Histoire,Université Paris 1 Panthéon-Sorbonne,non_selective,Histoire,Paris,Île-de-France,600,0.85,,Histoire-Géographie:0.4;HGGSP:0.3;Français:0.3
+Licence Histoire,Université Toulouse Jean Jaurès,non_selective,Histoire,Toulouse,Occitanie,500,0.95,,Histoire-Géographie:0.4;HGGSP:0.3;Français:0.3
+Licence Lettres Modernes,Sorbonne Université,non_selective,Lettres,Paris,Île-de-France,400,0.80,,Français:0.5;Philosophie:0.3;LV1 Anglais:0.2
+Licence Mathématiques,Sorbonne Université,non_selective,Sciences,Paris,Île-de-France,500,0.75,,Mathématiques:0.6;Physique-Chimie:0.2;NSI:0.2
+Licence Mathématiques,Université Paris-Saclay,non_selective,Sciences,Orsay,Île-de-France,450,0.78,,Mathématiques:0.6;Physique-Chimie:0.2;NSI:0.2
+Licence Informatique,Université Paris Cité,non_selective,Informatique,Paris,Île-de-France,600,0.70,,Mathématiques:0.4;NSI:0.4;Physique-Chimie:0.2
+Licence Informatique,Université Claude Bernard Lyon 1,non_selective,Informatique,Lyon,Auvergne-Rhône-Alpes,550,0.82,,Mathématiques:0.4;NSI:0.4;Physique-Chimie:0.2
+Licence Sciences de la Vie,Sorbonne Université,non_selective,Sciences,Paris,Île-de-France,700,0.78,,SVT:0.4;Physique-Chimie:0.3;Mathématiques:0.3
+Licence Sciences de la Vie,Aix-Marseille Université,non_selective,Sciences,Marseille,Provence-Alpes-Côte d'Azur,650,0.88,,SVT:0.4;Physique-Chimie:0.3;Mathématiques:0.3
+Licence STAPS,Université Paris-Saclay,non_selective,Sport,Orsay,Île-de-France,400,0.45,,SVT:0.3;Physique-Chimie:0.3;Français:0.2;SES:0.2
+Licence LEA Anglais-Espagnol,Université Lumière Lyon 2,non_selective,Langues,Lyon,Auvergne-Rhône-Alpes,500,0.80,,LV1 Anglais:0.4;Français:0.3;Histoire-Géographie:0.3
+Licence LLCER Anglais,Université Paris Nanterre,non_selective,Langues,Nanterre,Île-de-France,450,0.85,,LV1 Anglais:0.5;Français:0.3;Histoire-Géographie:0.2
+Licence Sociologie,Université Paris Cité,non_selective,Sciences sociales,Paris,Île-de-France,400,0.82,,SES:0.3;Histoire-Géographie:0.3;Français:0.2;Philosophie:0.2
+Licence Chimie,Université Claude Bernard Lyon 1,non_selective,Sciences,Lyon,Auvergne-Rhône-Alpes,400,0.85,,Physique-Chimie:0.5;Mathématiques:0.3;SVT:0.2
+Licence Physique,Sorbonne Université,non_selective,Sciences,Paris,Île-de-France,450,0.80,,Physique-Chimie:0.5;Mathématiques:0.4;NSI:0.1
