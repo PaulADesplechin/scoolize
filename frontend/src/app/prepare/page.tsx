@@ -78,9 +78,9 @@ export default function PrepareDashboard() {
               <s.icon className="size-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">
+              <div className="text-3xl font-bold">
                 {programs === null ? <Skeleton className="h-8 w-12" /> : s.value}
-              </p>
+              </div>
             </CardContent>
           </Card>
         ))}
