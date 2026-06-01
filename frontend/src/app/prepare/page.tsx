@@ -7,6 +7,7 @@ import { Layers, Plus, Sparkles, Users } from "lucide-react";
 import { api, type Candidate, type Program } from "@/lib/api";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ErrorBanner } from "@/components/error-banner";
 import {
   Card,
   CardContent,
@@ -15,7 +16,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import {
+  cn,
+  errorMessage,
+  programTypeBadgeVariant,
+  programTypeLabel,
+} from "@/lib/utils";
 
 export default function PrepareDashboard() {
   const [programs, setPrograms] = useState<Program[] | null>(null);
@@ -29,7 +35,7 @@ export default function PrepareDashboard() {
         setCandidates(c);
       })
       .catch((e: unknown) =>
-        setError(e instanceof Error ? e.message : "Erreur de chargement"),
+        setError(errorMessage(e, "Erreur de chargement")),
       );
   }, []);
 
@@ -64,10 +70,7 @@ export default function PrepareDashboard() {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
-          {error} — vérifiez que l&apos;API tourne sur {" "}
-          <code className="font-mono">localhost:8000</code>.
-        </div>
+        <ErrorBanner message={`${error} — vérifiez que l'API tourne sur localhost:8000.`} />
       )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -117,8 +120,8 @@ export default function PrepareDashboard() {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-medium">{program.name}</span>
-                  <Badge variant={program.type === "selective" ? "default" : "secondary"}>
-                    {program.type === "selective" ? "Sélective" : "Non-sélective"}
+                  <Badge variant={programTypeBadgeVariant(program.type)}>
+                    {programTypeLabel(program.type)}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">

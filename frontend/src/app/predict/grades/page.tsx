@@ -2,19 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { ArrowRight, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
-import {
-  api,
-  getStoredStudent,
-  updateStoredStudent,
-  type Grade,
-  type Student,
-} from "@/lib/api";
+import { api, updateStoredStudent, type Grade, type Student } from "@/lib/api";
 import { SUBJECTS } from "@/lib/constants";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { useStoredStudent } from "@/lib/hooks";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Card,
@@ -23,47 +17,52 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { ProfileRequired } from "@/components/profile-required";
+import { cn, errorMessage, SELECT_CLASS } from "@/lib/utils";
 
 const EXTRACTED_KEY = "scoolize_extracted";
-const SELECT_CLASS =
-  "h-9 flex-1 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
 
 interface Row {
   subject: string;
   value: string;
 }
 
+function pickInitialRows(student: Student | null): { rows: Row[]; fromOcr: boolean } {
+  const fallback = { rows: [{ subject: "Mathématiques", value: "" }], fromOcr: false };
+  if (!student) return fallback;
+
+  const raw =
+    typeof window !== "undefined" ? window.localStorage.getItem(EXTRACTED_KEY) : null;
+  if (raw) {
+    const extracted = JSON.parse(raw) as Record<string, number>;
+    const rows = Object.entries(extracted).map(([subject, value]) => ({
+      subject,
+      value: String(value),
+    }));
+    if (rows.length > 0) return { rows, fromOcr: true };
+  }
+  if (student.grades?.length) {
+    return {
+      rows: student.grades.map((g) => ({ subject: g.subject, value: String(g.value) })),
+      fromOcr: false,
+    };
+  }
+  return fallback;
+}
+
 export default function GradesPage() {
   const router = useRouter();
-  const [ready, setReady] = useState(false);
-  const [student, setStudent] = useState<Student | null>(null);
+  const { student, ready } = useStoredStudent();
   const [rows, setRows] = useState<Row[]>([]);
   const [fromOcr, setFromOcr] = useState(false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    const current = getStoredStudent();
-    setStudent(current);
-    setReady(true);
-    if (!current) return;
-
-    let initial: Row[] = [];
-    const raw = window.localStorage.getItem(EXTRACTED_KEY);
-    if (raw) {
-      const extracted = JSON.parse(raw) as Record<string, number>;
-      initial = Object.entries(extracted).map(([subject, value]) => ({
-        subject,
-        value: String(value),
-      }));
-      if (initial.length > 0) setFromOcr(true);
-    }
-    if (initial.length === 0 && current.grades?.length) {
-      initial = current.grades.map((g) => ({ subject: g.subject, value: String(g.value) }));
-    }
-    if (initial.length === 0) initial = [{ subject: "Mathématiques", value: "" }];
+    if (!ready) return;
+    const { rows: initial, fromOcr: ocr } = pickInitialRows(student);
     setRows(initial);
-  }, []);
+    setFromOcr(ocr);
+  }, [ready, student]);
 
   function patch(index: number, p: Partial<Row>) {
     setRows((rs) => rs.map((r, i) => (i === index ? { ...r, ...p } : r)));
@@ -91,24 +90,14 @@ export default function GradesPage() {
       toast.success("Notes validées.");
       router.push("/predict/results");
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Échec de l'enregistrement.");
+      toast.error(errorMessage(e, "Échec de l'enregistrement."));
     } finally {
       setSaving(false);
     }
   }
 
   if (!ready) return null;
-
-  if (!student) {
-    return (
-      <div className="mx-auto max-w-md space-y-4 text-center">
-        <h1 className="text-2xl font-bold">Profil requis</h1>
-        <Link href="/predict" className={cn(buttonVariants())}>
-          Créer mon profil
-        </Link>
-      </div>
-    );
-  }
+  if (!student) return <ProfileRequired />;
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -130,9 +119,13 @@ export default function GradesPage() {
           {rows.map((row, i) => (
             <div key={i} className="flex items-center gap-2">
               <select
-                className={SELECT_CLASS}
+                className={cn(SELECT_CLASS, "flex-1")}
                 value={SUBJECTS.includes(row.subject) ? row.subject : "__other"}
-                onChange={(e) => patch(i, { subject: e.target.value === "__other" ? "" : e.target.value })}
+                onChange={(e) =>
+                  patch(i, {
+                    subject: e.target.value === "__other" ? "" : e.target.value,
+                  })
+                }
               >
                 {SUBJECTS.map((s) => (
                   <option key={s} value={s}>

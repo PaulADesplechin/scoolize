@@ -117,7 +117,11 @@ async function request<T>(
   options: RequestInit = {},
   auth = false,
 ): Promise<T> {
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  const headers: Record<string, string> = {};
+  // Laisse le navigateur poser le boundary du multipart si c'est un FormData.
+  if (!(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
   if (options.headers) Object.assign(headers, options.headers as Record<string, string>);
   if (auth) {
     const token = getToken();
@@ -171,19 +175,14 @@ export const api = {
       body: JSON.stringify(grades),
     }, true),
 
-  uploadBulletin: async (id: number, file: File) => {
+  uploadBulletin: (id: number, file: File) => {
     const fd = new FormData();
     fd.append("file", file);
-    const headers: Record<string, string> = {};
-    const token = getToken();
-    if (token) headers.Authorization = `Bearer ${token}`;
-    const res = await fetch(`${API_URL}/api/students/${id}/upload`, {
-      method: "POST",
-      body: fd,
-      headers,
-    });
-    if (!res.ok) throw new Error(await errorDetail(res));
-    return (await res.json()) as { filename: string; extracted: Record<string, number> };
+    return request<{ filename: string; extracted: Record<string, number> }>(
+      `/api/students/${id}/upload`,
+      { method: "POST", body: fd },
+      true,
+    );
   },
 
   match: (id: number, limit = 10) =>

@@ -7,6 +7,7 @@ import { ArrowLeft, Download } from "lucide-react";
 import { api, type Candidate, type Program } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ErrorBanner } from "@/components/error-banner";
 import {
   Card,
   CardContent,
@@ -23,9 +24,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const SELECT_CLASS =
-  "h-9 w-full max-w-xs rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
+import {
+  cn,
+  errorMessage,
+  programTypeBadgeVariant,
+  programTypeLabel,
+  SELECT_CLASS,
+} from "@/lib/utils";
 
 function exportCsv(rows: Candidate[]) {
   const header = ["Candidat", "Lycée", "Filière", "Formation", "Type", "Score", "Statut"];
@@ -34,7 +39,7 @@ function exportCsv(rows: Candidate[]) {
     r.student_school ?? "",
     r.student_track ?? "",
     r.program_name,
-    r.program_type === "selective" ? "Sélective" : "Non-sélective",
+    programTypeLabel(r.program_type),
     r.score != null ? String(r.score) : "",
     r.status,
   ]);
@@ -66,7 +71,7 @@ export default function CandidatesPage() {
       .candidates(filter ? Number(filter) : undefined)
       .then(setCandidates)
       .catch((e: unknown) =>
-        setError(e instanceof Error ? e.message : "Erreur de chargement"),
+        setError(errorMessage(e, "Erreur de chargement")),
       );
   }, [filter]);
 
@@ -101,7 +106,7 @@ export default function CandidatesPage() {
         </label>
         <select
           id="filter"
-          className={SELECT_CLASS}
+          className={cn(SELECT_CLASS, "w-full max-w-xs")}
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         >
@@ -114,11 +119,7 @@ export default function CandidatesPage() {
         </select>
       </div>
 
-      {error && (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
-          {error}
-        </div>
-      )}
+      {error && <ErrorBanner message={error} />}
 
       <Card>
         <CardHeader>
@@ -166,10 +167,8 @@ export default function CandidatesPage() {
                     </TableCell>
                     <TableCell className="text-sm">{c.program_name}</TableCell>
                     <TableCell>
-                      <Badge
-                        variant={c.program_type === "selective" ? "default" : "secondary"}
-                      >
-                        {c.program_type === "selective" ? "Sélective" : "Non-sélective"}
+                      <Badge variant={programTypeBadgeVariant(c.program_type)}>
+                        {programTypeLabel(c.program_type)}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right font-semibold">

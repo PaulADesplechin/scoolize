@@ -18,10 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-
-const SELECT_CLASS =
-  "h-9 w-full rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
+import { cn, errorMessage, SELECT_CLASS } from "@/lib/utils";
 
 interface SubjectRow {
   subject: string;
@@ -90,11 +87,13 @@ export default function NewProgramPage() {
       toast.success("Formation créée avec succès.");
       router.push("/prepare");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Échec de la création.");
+      toast.error(errorMessage(err, "Échec de la création."));
     } finally {
       setSubmitting(false);
     }
   }
+
+  const selectFull = cn(SELECT_CLASS, "w-full");
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -139,7 +138,7 @@ export default function NewProgramPage() {
                 <Label htmlFor="type">Type</Label>
                 <select
                   id="type"
-                  className={SELECT_CLASS}
+                  className={selectFull}
                   value={form.type}
                   onChange={(e) => update("type", e.target.value as ProgramType)}
                 >
@@ -151,7 +150,7 @@ export default function NewProgramPage() {
                 <Label htmlFor="domain">Domaine</Label>
                 <select
                   id="domain"
-                  className={SELECT_CLASS}
+                  className={selectFull}
                   value={form.domain}
                   onChange={(e) => update("domain", e.target.value)}
                 >
@@ -176,7 +175,7 @@ export default function NewProgramPage() {
                 <Label htmlFor="region">Région</Label>
                 <select
                   id="region"
-                  className={SELECT_CLASS}
+                  className={selectFull}
                   value={form.region}
                   onChange={(e) => update("region", e.target.value)}
                 >
@@ -239,7 +238,10 @@ export default function NewProgramPage() {
                   variant="outline"
                   size="sm"
                   onClick={() =>
-                    setSubjects((rows) => [...rows, { subject: "Français", weight: "0.3" }])
+                    setSubjects((rows) => [
+                      ...rows,
+                      { subject: "Français", weight: "0.3" },
+                    ])
                   }
                 >
                   <Plus className="size-4" /> Ajouter
@@ -253,7 +255,7 @@ export default function NewProgramPage() {
                 {subjects.map((row, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <select
-                      className={SELECT_CLASS}
+                      className={selectFull}
                       value={row.subject}
                       onChange={(e) => patchSubject(i, { subject: e.target.value })}
                     >

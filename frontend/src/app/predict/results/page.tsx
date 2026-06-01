@@ -12,14 +12,11 @@ import {
   YAxis,
 } from "recharts";
 
-import {
-  api,
-  getStoredStudent,
-  type MatchResult,
-  type Student,
-} from "@/lib/api";
+import { api, type MatchResult } from "@/lib/api";
+import { useStoredStudent } from "@/lib/hooks";
 import { ProgramCard } from "@/components/program-card";
-import { buttonVariants } from "@/components/ui/button";
+import { ProfileRequired } from "@/components/profile-required";
+import { ErrorBanner } from "@/components/error-banner";
 import {
   Card,
   CardContent,
@@ -28,20 +25,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-
-const SELECT_CLASS =
-  "h-9 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
-
-function barColor(score: number) {
-  if (score >= 70) return "#16a34a";
-  if (score >= 45) return "#d97706";
-  return "#dc2626";
-}
+import {
+  errorMessage,
+  SCORE_TIER_HEX,
+  SELECT_CLASS,
+  scoreTier,
+} from "@/lib/utils";
 
 export default function ResultsPage() {
-  const [ready, setReady] = useState(false);
-  const [student, setStudent] = useState<Student | null>(null);
+  const { student, ready } = useStoredStudent();
   const [results, setResults] = useState<MatchResult[] | null>(null);
   const [applied, setApplied] = useState<Set<number>>(new Set());
   const [typeFilter, setTypeFilter] = useState("");
@@ -49,21 +41,16 @@ export default function ResultsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const current = getStoredStudent();
-    setStudent(current);
-    setReady(true);
-    if (!current) return;
+    if (!ready || !student) return;
     api
-      .match(current.id, 10)
+      .match(student.id, 10)
       .then(setResults)
-      .catch((e: unknown) =>
-        setError(e instanceof Error ? e.message : "Erreur de chargement"),
-      );
+      .catch((e: unknown) => setError(errorMessage(e, "Erreur de chargement")));
     api
       .myApplications()
       .then((apps) => setApplied(new Set(apps.map((a) => a.program_id))))
       .catch(() => undefined);
-  }, []);
+  }, [ready, student]);
 
   const regions = useMemo(
     () =>
@@ -83,26 +70,20 @@ export default function ResultsPage() {
     [results, typeFilter, regionFilter],
   );
 
-  const chartData = filtered.slice(0, 8).map((r) => ({
-    name:
-      r.program.name.length > 20
-        ? `${r.program.name.slice(0, 20)}…`
-        : r.program.name,
-    score: r.score,
-  }));
+  const chartData = useMemo(
+    () =>
+      filtered.slice(0, 8).map((r) => ({
+        name:
+          r.program.name.length > 20
+            ? `${r.program.name.slice(0, 20)}…`
+            : r.program.name,
+        score: r.score,
+      })),
+    [filtered],
+  );
 
   if (!ready) return null;
-
-  if (!student) {
-    return (
-      <div className="mx-auto max-w-md space-y-4 text-center">
-        <h1 className="text-2xl font-bold">Profil requis</h1>
-        <Link href="/predict" className={cn(buttonVariants())}>
-          Créer mon profil
-        </Link>
-      </div>
-    );
-  }
+  if (!student) return <ProfileRequired />;
 
   const noGrades = (student.grades?.length ?? 0) === 0;
 
@@ -120,18 +101,17 @@ export default function ResultsPage() {
       {noGrades && (
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
           Vous n&apos;avez pas encore validé de notes —{" "}
-          <Link href="/predict/upload" className="font-medium text-primary underline">
+          <Link
+            href="/predict/upload"
+            className="font-medium text-primary underline"
+          >
             importez votre bulletin
           </Link>{" "}
           pour affiner le matching.
         </div>
       )}
 
-      {error && (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
-          {error}
-        </div>
-      )}
+      {error && <ErrorBanner message={error} />}
 
       <div className="flex flex-wrap gap-3">
         <select
@@ -200,7 +180,7 @@ export default function ResultsPage() {
                       <Tooltip cursor={{ fill: "rgba(0,0,0,0.05)" }} />
                       <Bar dataKey="score" radius={[0, 4, 4, 0]}>
                         {chartData.map((d, i) => (
-                          <Cell key={i} fill={barColor(d.score)} />
+                          <Cell key={i} fill={SCORE_TIER_HEX[scoreTier(d.score)]} />
                         ))}
                       </Bar>
                     </BarChart>

@@ -9,6 +9,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScoreGauge } from "@/components/score-gauge";
+import {
+  errorMessage,
+  programTypeBadgeVariant,
+  programTypeLabel,
+} from "@/lib/utils";
 
 export function ProgramCard({
   result,
@@ -28,7 +33,7 @@ export function ProgramCard({
       setApplied(true);
       toast.success(`Candidature envoyée : ${program.name}`);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Échec de la candidature.");
+      toast.error(errorMessage(e, "Échec de la candidature."));
     } finally {
       setLoading(false);
     }
@@ -43,8 +48,8 @@ export function ProgramCard({
         <div className="flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-semibold">{program.name}</span>
-            <Badge variant={program.type === "selective" ? "default" : "secondary"}>
-              {program.type === "selective" ? "Sélective" : "Non-sélective"}
+            <Badge variant={programTypeBadgeVariant(program.type)}>
+              {programTypeLabel(program.type)}
             </Badge>
             {result.eligible ? (
               <Badge variant="outline">Éligible</Badge>

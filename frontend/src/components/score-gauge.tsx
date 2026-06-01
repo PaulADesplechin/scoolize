@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, SCORE_TIER_CLASS, scoreTier } from "@/lib/utils";
 
 export function ScoreGauge({ value, size = 72 }: { value: number; size?: number }) {
   const stroke = 6;
@@ -6,8 +6,7 @@ export function ScoreGauge({ value, size = 72 }: { value: number; size?: number 
   const circumference = 2 * Math.PI * radius;
   const pct = Math.max(0, Math.min(100, value));
   const offset = circumference - (pct / 100) * circumference;
-  const color =
-    pct >= 70 ? "text-chart-2" : pct >= 45 ? "text-chart-3" : "text-chart-4";
+  const color = SCORE_TIER_CLASS[scoreTier(pct)];
 
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>

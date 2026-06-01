@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { FileText, Loader2, UploadCloud } from "lucide-react";
 import { toast } from "sonner";
 
-import { api, getStoredStudent, type Student } from "@/lib/api";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { api } from "@/lib/api";
+import { useStoredStudent } from "@/lib/hooks";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -15,23 +15,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { ProfileRequired } from "@/components/profile-required";
+import { cn, errorMessage } from "@/lib/utils";
 
 const EXTRACTED_KEY = "scoolize_extracted";
 
 export default function UploadPage() {
   const router = useRouter();
-  const [ready, setReady] = useState(false);
-  const [student, setStudent] = useState<Student | null>(null);
+  const { student, ready } = useStoredStudent();
   const [file, setFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setStudent(getStoredStudent());
-    setReady(true);
-  }, []);
 
   function pick(selected: File | null | undefined) {
     if (!selected) return;
@@ -56,7 +51,7 @@ export default function UploadPage() {
       }
       router.push("/predict/grades");
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Échec de l'analyse OCR.");
+      toast.error(errorMessage(e, "Échec de l'analyse OCR."));
     } finally {
       setLoading(false);
     }
@@ -71,15 +66,7 @@ export default function UploadPage() {
 
   if (!student) {
     return (
-      <div className="mx-auto max-w-md space-y-4 text-center">
-        <h1 className="text-2xl font-bold">Profil requis</h1>
-        <p className="text-muted-foreground">
-          Créez d&apos;abord votre profil étudiant pour analyser un bulletin.
-        </p>
-        <Link href="/predict" className={cn(buttonVariants())}>
-          Créer mon profil
-        </Link>
-      </div>
+      <ProfileRequired message="Créez d'abord votre profil étudiant pour analyser un bulletin." />
     );
   }
 

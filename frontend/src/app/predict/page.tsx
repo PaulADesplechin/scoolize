@@ -6,14 +6,8 @@ import Link from "next/link";
 import { GraduationCap, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 
-import {
-  api,
-  clearSession,
-  getStoredStudent,
-  setSession,
-  type School,
-  type Student,
-} from "@/lib/api";
+import { api, clearSession, setSession, type School } from "@/lib/api";
+import { useStoredStudent } from "@/lib/hooks";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,15 +18,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-
-const SELECT_CLASS =
-  "h-9 w-full rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50";
+import { cn, errorMessage, SELECT_CLASS } from "@/lib/utils";
 
 export default function PredictHome() {
   const router = useRouter();
-  const [ready, setReady] = useState(false);
-  const [student, setStudent] = useState<Student | null>(null);
+  const { student, setStudent, ready } = useStoredStudent();
   const [schools, setSchools] = useState<School[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
@@ -45,8 +35,6 @@ export default function PredictHome() {
   });
 
   useEffect(() => {
-    setStudent(getStoredStudent());
-    setReady(true);
     api.listSchools().then(setSchools).catch(() => undefined);
   }, []);
 
@@ -77,10 +65,11 @@ export default function PredictHome() {
       });
       const { access_token } = await api.login(form.email.trim(), form.password);
       setSession(access_token, created);
+      setStudent(created);
       toast.success("Profil créé, place à l'analyse de votre bulletin !");
       router.push("/predict/upload");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Échec de la création.");
+      toast.error(errorMessage(err, "Échec de la création."));
     } finally {
       setSubmitting(false);
     }
@@ -180,7 +169,7 @@ export default function PredictHome() {
               <Label htmlFor="school">Lycée</Label>
               <select
                 id="school"
-                className={SELECT_CLASS}
+                className={cn(SELECT_CLASS, "w-full")}
                 value={form.school_id}
                 onChange={(e) => update("school_id", e.target.value)}
               >
