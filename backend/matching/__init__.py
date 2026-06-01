@@ -15,6 +15,8 @@ Renvoie un score /100, un intervalle de confiance, la catégorie et l'éligibili
 """
 from __future__ import annotations
 
+from functools import lru_cache
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
@@ -43,7 +45,10 @@ def _train_admission_model():
     return model
 
 
-_ADMISSION_MODEL = _train_admission_model()
+@lru_cache(maxsize=1)
+def _admission_model():
+    """Charge le modèle paresseusement : pas de coût à l'import, entraîné au 1er appel."""
+    return _train_admission_model()
 
 
 def _grades_by_subject(student) -> dict[str, float]:
@@ -84,7 +89,7 @@ def _admission_probability(weighted_avg: float, program) -> float:
         program.admission_rate if program.admission_rate is not None else 0.5
     )
     margin = weighted_avg - threshold
-    proba = _ADMISSION_MODEL.predict_proba([[margin, selectivity]])[0, 1]
+    proba = _admission_model().predict_proba([[margin, selectivity]])[0, 1]
     return float(proba)
 
 

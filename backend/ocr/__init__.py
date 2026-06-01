@@ -85,10 +85,23 @@ def parse_grades_from_text(text: str) -> dict[str, float]:
     return grades
 
 
+def _ocr_image(image, lang: str | None) -> str:
+    """Lit une image via Tesseract — renvoie '' si Tesseract échoue."""
+    import pytesseract
+
+    try:
+        if lang:
+            return pytesseract.image_to_string(image, lang=lang)
+        return pytesseract.image_to_string(image)
+    except Exception as exc:
+        logger.warning("Tesseract a échoué (lang=%s) : %s", lang, exc)
+        return ""
+
+
 def extract_text_from_pdf(pdf_bytes: bytes, lang: str = "fra") -> str:
     """PDF -> texte (poppler + Tesseract). Renvoie '' si une dépendance manque."""
     try:
-        import pytesseract
+        import pytesseract  # noqa: F401
         from pdf2image import convert_from_bytes
     except ImportError as exc:
         logger.warning("OCR indisponible (dépendances Python manquantes : %s)", exc)
@@ -102,14 +115,10 @@ def extract_text_from_pdf(pdf_bytes: bytes, lang: str = "fra") -> str:
 
     chunks: list[str] = []
     for image in images:
-        try:
-            chunks.append(pytesseract.image_to_string(image, lang=lang))
-        except Exception as exc:  # langue absente -> repli sans langue
-            logger.warning("Tesseract (lang=%s) a échoué (%s) — repli défaut", lang, exc)
-            try:
-                chunks.append(pytesseract.image_to_string(image))
-            except Exception as exc2:
-                logger.warning("Tesseract a échoué : %s", exc2)
+        text = _ocr_image(image, lang)
+        if not text and lang:
+            text = _ocr_image(image, None)  # repli sans langue
+        chunks.append(text)
     return "\n".join(chunks)
 
 

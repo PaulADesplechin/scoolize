@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.deps import get_current_student
+from app.deps import get_current_student, get_or_404
 from app.models import Application, Program, Student
 from app.schemas import ApplicationCreate, ApplicationOut
 
@@ -15,9 +15,7 @@ def create_application(
     db: Session = Depends(get_db),
     current: Student = Depends(get_current_student),
 ):
-    program = db.get(Program, payload.program_id)
-    if not program:
-        raise HTTPException(status_code=404, detail="Formation introuvable")
+    program = get_or_404(db, Program, payload.program_id, "Formation")
 
     existing = (
         db.query(Application)

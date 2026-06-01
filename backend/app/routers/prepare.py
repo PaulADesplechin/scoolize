@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.database import get_db
-from app.models import Application
+from app.models import Application, Student
 from app.schemas import CandidateOut
 
 router = APIRouter(prefix="/api", tags=["prepare"])
@@ -14,11 +14,18 @@ def list_candidates(
     db: Session = Depends(get_db),
 ):
     """Vue côté école : candidats ayant postulé (optionnellement filtrés par formation)."""
-    query = db.query(Application)
+    query = (
+        db.query(Application)
+        .options(
+            joinedload(Application.student).joinedload(Student.school),
+            joinedload(Application.program),
+        )
+        .order_by(Application.score_snapshot.desc().nullslast())
+    )
     if program_id:
         query = query.filter(Application.program_id == program_id)
 
-    candidates = [
+    return [
         CandidateOut(
             application_id=app_row.id,
             student_name=f"{app_row.student.first_name} {app_row.student.last_name}",
@@ -32,5 +39,3 @@ def list_candidates(
         )
         for app_row in query.all()
     ]
-    candidates.sort(key=lambda c: (c.score or 0.0), reverse=True)
-    return candidates
