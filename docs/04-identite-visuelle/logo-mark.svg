@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Scoolize">
+  <!-- Mortarboard -->
+  <path d="M 24 8 L 42 18 L 24 28 L 6 18 Z" fill="#4263eb"/>
+  <!-- Tige et bord -->
+  <path d="M 34 21 L 34 32 C 34 34 32 36 30 36 L 24 36"
+        fill="none" stroke="#4263eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Pampille -->
+  <circle cx="24" cy="40" r="2.5" fill="#4263eb"/>
+</svg>
