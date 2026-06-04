@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoolize — Prepare · Candidats</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{primary:'#4263eb',muted:'#f4f4f5',border:'#e4e4e7'}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body{font-family:Inter,system-ui,sans-serif}</style>
+</head>
+<body class="bg-white text-zinc-900">
+  <header class="sticky top-0 z-40 border-b border-border bg-white/80 backdrop-blur">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+      <div class="flex items-center gap-2 font-semibold">
+        <svg width="20" height="20" viewBox="0 0 48 48"><path d="M 24 8 L 42 18 L 24 28 L 6 18 Z" fill="#4263eb"/><circle cx="24" cy="38" r="2.5" fill="#4263eb"/></svg>
+        <span>Scoolize</span>
+      </div>
+      <nav class="flex items-center gap-1 text-sm">
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Accueil</a>
+        <a class="rounded-md bg-muted px-3 py-1.5 font-medium">Prepare · Écoles</a>
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Predict · Étudiants</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 space-y-6">
+    <a class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900">← Retour au tableau de bord</a>
+
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold">Candidats</h1>
+        <p class="text-zinc-500">Les étudiants ayant candidaté, classés par score de matching.</p>
+      </div>
+      <button class="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted inline-flex items-center gap-2">⬇ Exporter en CSV</button>
+    </div>
+
+    <div class="space-y-1.5">
+      <label class="text-sm font-medium">Filtrer par formation</label>
+      <select class="h-9 w-full max-w-xs rounded-lg border border-border px-3 text-sm bg-white">
+        <option>Toutes les formations</option>
+        <option>BUT Informatique — IUT de Villetaneuse</option>
+        <option>CPGE MPSI — Lycée Louis-le-Grand</option>
+      </select>
+    </div>
+
+    <div class="rounded-xl border border-border p-6 space-y-3">
+      <div>
+        <h3 class="font-semibold">5 candidatures</h3>
+        <p class="text-sm text-zinc-500">Le score est figé au moment de la candidature.</p>
+      </div>
+      <table class="w-full text-sm">
+        <thead class="text-left text-zinc-500 border-b border-border">
+          <tr>
+            <th class="py-2">Candidat</th>
+            <th class="py-2">Lycée</th>
+            <th class="py-2">Formation</th>
+            <th class="py-2">Type</th>
+            <th class="py-2 text-right">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-border">
+            <td class="py-2">
+              <div class="font-medium">Léa Martin</div>
+              <div class="text-xs text-zinc-500">Générale — spé Maths, Physique-Chimie</div>
+            </td>
+            <td class="text-zinc-500">Lycée Louis-le-Grand</td>
+            <td>BUT GEII</td>
+            <td><span class="bg-primary text-white text-xs rounded-full px-2 py-0.5">Sélective</span></td>
+            <td class="text-right font-semibold">94,2</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-2">
+              <div class="font-medium">Tom Garcia</div>
+              <div class="text-xs text-zinc-500">Générale — spé Maths, SES</div>
+            </td>
+            <td class="text-zinc-500">Lycée Thiers</td>
+            <td>BUT Techniques de Commercialisation</td>
+            <td><span class="bg-primary text-white text-xs rounded-full px-2 py-0.5">Sélective</span></td>
+            <td class="text-right font-semibold">79,3</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-2">
+              <div class="font-medium">Noah Petit</div>
+              <div class="text-xs text-zinc-500">Générale — spé Maths, SES</div>
+            </td>
+            <td class="text-zinc-500">Lycée du Parc</td>
+            <td>Licence Économie-Gestion</td>
+            <td><span class="bg-muted text-zinc-900 text-xs rounded-full px-2 py-0.5">Non-sélective</span></td>
+            <td class="text-right font-semibold">66,8</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-2">
+              <div class="font-medium">Camille Robert</div>
+              <div class="text-xs text-zinc-500">Générale — spé HLP, HGGSP</div>
+            </td>
+            <td class="text-zinc-500">Lycée Henri-IV</td>
+            <td>CPGE Lettres A/L</td>
+            <td><span class="bg-primary text-white text-xs rounded-full px-2 py-0.5">Sélective</span></td>
+            <td class="text-right font-semibold">63,5</td>
+          </tr>
+          <tr>
+            <td class="py-2">
+              <div class="font-medium">Lina Moreau</div>
+              <div class="text-xs text-zinc-500">Générale — spé SVT, Physique-Chimie</div>
+            </td>
+            <td class="text-zinc-500">Lycée Faidherbe</td>
+            <td>Licence Histoire</td>
+            <td><span class="bg-muted text-zinc-900 text-xs rounded-full px-2 py-0.5">Non-sélective</span></td>
+            <td class="text-right font-semibold">61,2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

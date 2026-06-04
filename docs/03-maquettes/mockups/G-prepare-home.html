@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoolize — Prepare · Tableau de bord</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{primary:'#4263eb',muted:'#f4f4f5',border:'#e4e4e7'}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body{font-family:Inter,system-ui,sans-serif}</style>
+</head>
+<body class="bg-white text-zinc-900">
+  <header class="sticky top-0 z-40 border-b border-border bg-white/80 backdrop-blur">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+      <div class="flex items-center gap-2 font-semibold">
+        <svg width="20" height="20" viewBox="0 0 48 48"><path d="M 24 8 L 42 18 L 24 28 L 6 18 Z" fill="#4263eb"/><circle cx="24" cy="38" r="2.5" fill="#4263eb"/></svg>
+        <span>Scoolize</span>
+      </div>
+      <nav class="flex items-center gap-1 text-sm">
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Accueil</a>
+        <a class="rounded-md bg-muted px-3 py-1.5 font-medium">Prepare · Écoles</a>
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Predict · Étudiants</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 space-y-8">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold">Tableau de bord école</h1>
+        <p class="text-zinc-500">Gérez vos formations et suivez les candidats qui vous correspondent.</p>
+      </div>
+      <div class="flex gap-2">
+        <button class="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">👥 Candidats</button>
+        <button class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white">+ Nouvelle formation</button>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-xl border border-border p-4">
+        <div class="flex items-center justify-between pb-2 text-sm text-zinc-500">Formations <span>📚</span></div>
+        <div class="text-3xl font-bold">50</div>
+      </div>
+      <div class="rounded-xl border border-border p-4">
+        <div class="flex items-center justify-between pb-2 text-sm text-zinc-500">Sélectives <span>✨</span></div>
+        <div class="text-3xl font-bold">28</div>
+      </div>
+      <div class="rounded-xl border border-border p-4">
+        <div class="flex items-center justify-between pb-2 text-sm text-zinc-500">Non-sélectives <span>📂</span></div>
+        <div class="text-3xl font-bold">22</div>
+      </div>
+      <div class="rounded-xl border border-border p-4">
+        <div class="flex items-center justify-between pb-2 text-sm text-zinc-500">Candidatures <span>👥</span></div>
+        <div class="text-3xl font-bold">1</div>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-border p-6 space-y-3">
+      <div>
+        <h3 class="font-semibold">Formations déclarées</h3>
+        <p class="text-sm text-zinc-500">Les formations visibles côté étudiant dans le matching.</p>
+      </div>
+      <div class="space-y-3">
+        <!-- ligne -->
+        <div class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border p-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-medium">CPGE MPSI</span>
+              <span class="bg-primary text-white text-xs rounded-full px-2 py-0.5">Sélective</span>
+            </div>
+            <p class="text-sm text-zinc-500">Lycée Louis-le-Grand · Paris</p>
+          </div>
+          <div class="text-right text-sm text-zinc-500">144 places · 8% admis</div>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border p-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-medium">CPGE MPSI</span>
+              <span class="bg-primary text-white text-xs rounded-full px-2 py-0.5">Sélective</span>
+            </div>
+            <p class="text-sm text-zinc-500">Lycée du Parc · Lyon</p>
+          </div>
+          <div class="text-right text-sm text-zinc-500">90 places · 12% admis</div>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border p-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-medium">BUT Informatique</span>
+              <span class="bg-primary text-white text-xs rounded-full px-2 py-0.5">Sélective</span>
+            </div>
+            <p class="text-sm text-zinc-500">IUT de Villetaneuse · Villetaneuse</p>
+          </div>
+          <div class="text-right text-sm text-zinc-500">112 places · 30% admis</div>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border p-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-medium">Licence Mathématiques</span>
+              <span class="bg-muted text-zinc-900 text-xs rounded-full px-2 py-0.5">Non-sélective</span>
+            </div>
+            <p class="text-sm text-zinc-500">Sorbonne Université · Paris</p>
+          </div>
+          <div class="text-right text-sm text-zinc-500">500 places · 75% admis</div>
+        </div>
+        <p class="text-sm text-zinc-500">… et 46 autres formations.</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

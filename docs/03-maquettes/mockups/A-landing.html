@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scoolize — Landing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { primary: '#4263eb', muted: '#f4f4f5', border: '#e4e4e7' } } } }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body{font-family:Inter,system-ui,sans-serif}</style>
+</head>
+<body class="bg-white text-zinc-900">
+  <!-- Header partagé -->
+  <header class="sticky top-0 z-40 border-b border-border bg-white/80 backdrop-blur">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+      <div class="flex items-center gap-2 font-semibold">
+        <svg width="20" height="20" viewBox="0 0 48 48"><path d="M 24 8 L 42 18 L 24 28 L 6 18 Z" fill="#4263eb"/><circle cx="24" cy="38" r="2.5" fill="#4263eb"/></svg>
+        <span>Scoolize</span>
+      </div>
+      <nav class="flex items-center gap-1 text-sm">
+        <a class="rounded-md bg-muted px-3 py-1.5 font-medium">Accueil</a>
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Prepare · Écoles</a>
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Predict · Étudiants</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-12 space-y-20">
+    <!-- Hero -->
+    <section class="space-y-6 text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-sm text-zinc-500">
+        ✨ L'orientation post-bac, enfin lisible
+      </span>
+      <h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+        Scoolize rend Parcoursup <span class="text-primary">clair</span>.
+      </h1>
+      <p class="mx-auto max-w-2xl text-lg text-zinc-500">
+        Uploadez votre bulletin, laissez l'OCR lire vos notes, et découvrez
+        les formations qui vous correspondent — avec une vraie estimation
+        de vos chances d'admission.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <button class="rounded-lg bg-primary px-5 py-2 font-medium text-white">Je suis étudiant</button>
+        <button class="rounded-lg border border-border px-5 py-2 font-medium">Je suis une école</button>
+      </div>
+    </section>
+
+    <!-- 2 cards produit -->
+    <section class="grid gap-6 md:grid-cols-2">
+      <div class="rounded-xl border border-primary/20 p-6 space-y-3">
+        <div class="text-primary text-3xl">🎓</div>
+        <h3 class="text-xl font-semibold">Predict — côté étudiant</h3>
+        <p class="text-sm text-zinc-500">Importez votre bulletin, vérifiez vos notes, obtenez votre top 10 classé par adéquation et probabilité d'admission.</p>
+        <button class="mt-2 rounded-lg bg-muted px-4 py-2 text-sm font-medium">Commencer mon orientation</button>
+      </div>
+      <div class="rounded-xl border border-primary/20 p-6 space-y-3">
+        <div class="text-primary text-3xl">🏫</div>
+        <h3 class="text-xl font-semibold">Prepare — côté école</h3>
+        <p class="text-sm text-zinc-500">Déclarez vos formations, critères et matières clés ; suivez les candidats qui vous correspondent.</p>
+        <button class="mt-2 rounded-lg bg-muted px-4 py-2 text-sm font-medium">Accéder au tableau de bord</button>
+      </div>
+    </section>
+
+    <!-- Pourquoi -->
+    <section class="space-y-8">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-bold">Pourquoi Scoolize ?</h2>
+        <p class="mx-auto max-w-2xl text-zinc-500">Parcoursup est vécu comme opaque : peu de visibilité, pas de distinction claire, saisie fastidieuse. On attaque ces trois points.</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-xl border border-border p-5 space-y-2">
+          <div class="text-primary text-2xl">📄</div>
+          <h4 class="font-semibold">OCR des bulletins</h4>
+          <p class="text-sm text-zinc-500">Plus de saisie manuelle : on lit vos notes depuis le PDF, vous validez en un clic.</p>
+        </div>
+        <div class="rounded-xl border border-border p-5 space-y-2">
+          <div class="text-primary text-2xl">⚖️</div>
+          <h4 class="font-semibold">Matching transparent</h4>
+          <p class="text-sm text-zinc-500">Un score par formation, avec intervalle de confiance et probabilité d'admission estimée.</p>
+        </div>
+        <div class="rounded-xl border border-border p-5 space-y-2">
+          <div class="text-primary text-2xl">✨</div>
+          <h4 class="font-semibold">Sélectif vs non-sélectif</h4>
+          <p class="text-sm text-zinc-500">Deux logiques distinctes selon le type de formation — fini l'opacité sur vos chances réelles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-xl border border-border bg-muted/40 p-8 text-center text-sm text-zinc-500">
+      Projet pédagogique — données de démonstration inspirées de l'open data Parcoursup (data.gouv.fr). Aucune donnée réelle d'élève.
+    </section>
+  </main>
+</body>
+</html>

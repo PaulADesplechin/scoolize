@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoolize — Predict · Détail formation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{primary:'#4263eb',muted:'#f4f4f5',border:'#e4e4e7',destructive:'#dc2626'}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body{font-family:Inter,system-ui,sans-serif}</style>
+</head>
+<body class="bg-white text-zinc-900">
+  <header class="sticky top-0 z-40 border-b border-border bg-white/80 backdrop-blur">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+      <div class="flex items-center gap-2 font-semibold">
+        <svg width="20" height="20" viewBox="0 0 48 48"><path d="M 24 8 L 42 18 L 24 28 L 6 18 Z" fill="#4263eb"/><circle cx="24" cy="38" r="2.5" fill="#4263eb"/></svg>
+        <span>Scoolize</span>
+      </div>
+      <nav class="flex items-center gap-1 text-sm">
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Accueil</a>
+        <a class="rounded-md px-3 py-1.5 text-zinc-500">Prepare · Écoles</a>
+        <a class="rounded-md bg-muted px-3 py-1.5 font-medium">Predict · Étudiants</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-4 py-8 space-y-6">
+    <a class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900">← Retour aux résultats</a>
+
+    <div>
+      <h1 class="text-3xl font-bold">CPGE MPSI</h1>
+      <p class="text-zinc-500">Lycée Louis-le-Grand · Paris · Île-de-France</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <span class="bg-primary text-white text-xs rounded-full px-2 py-0.5">Sélective</span>
+        <span class="bg-destructive/10 text-destructive text-xs rounded-full px-2 py-0.5">Sous le seuil</span>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-border p-6 flex flex-col sm:flex-row gap-6 items-center">
+      <div class="relative size-[140px] shrink-0">
+        <svg width="140" height="140" class="-rotate-90">
+          <circle cx="70" cy="70" r="64" stroke="#f4f4f5" stroke-width="10" fill="none"/>
+          <circle cx="70" cy="70" r="64" stroke="#d97706" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="180"/>
+        </svg>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <span class="text-3xl font-bold">28%</span>
+          <span class="text-xs text-zinc-500">admission</span>
+        </div>
+      </div>
+      <div class="space-y-2 text-sm">
+        <p><strong>Probabilité d'admission estimée à 28 %</strong></p>
+        <p>Moyenne matières clés <strong>17,3/20</strong> — seuil indicatif <strong>16,5</strong>.</p>
+        <p class="text-zinc-500">Intervalle de confiance : 24 – 33 % (large : couverture matières partielle).</p>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-border p-6 space-y-3">
+      <h3 class="font-semibold">Pourquoi ce score ?</h3>
+      <table class="w-full text-sm">
+        <thead class="text-left text-zinc-500 border-b border-border">
+          <tr><th class="py-2">Matière</th><th class="py-2">Ma note</th><th class="py-2">Poids</th><th class="py-2">Contribution</th></tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-border"><td class="py-2">Mathématiques</td><td>17,5</td><td>0,5</td><td class="text-success">+43 %</td></tr>
+          <tr class="border-b border-border"><td class="py-2">Physique-Chimie</td><td>17,0</td><td>0,3</td><td class="text-success">+25 %</td></tr>
+          <tr><td class="py-2">NSI</td><td>16,5</td><td>0,2</td><td class="text-success">+16 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rounded-xl border border-border p-6 space-y-2 text-sm">
+      <h3 class="font-semibold">À propos de la formation</h3>
+      <div class="grid grid-cols-2 gap-2 text-zinc-500">
+        <div>Capacité</div><div class="text-zinc-900">144 places</div>
+        <div>Taux historique</div><div class="text-zinc-900">8 % admis</div>
+        <div>Domaine</div><div class="text-zinc-900">Sciences</div>
+        <div>Région</div><div class="text-zinc-900">Île-de-France</div>
+      </div>
+    </div>
+
+    <div class="flex gap-2">
+      <button class="rounded-lg bg-primary px-4 py-2 font-medium text-white">Candidater</button>
+      <button class="rounded-lg border border-border px-4 py-2 font-medium hover:bg-muted">Voir des formations similaires</button>
+    </div>
+  </main>
+</body>
+</html>
