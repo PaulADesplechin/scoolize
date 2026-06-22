@@ -3,15 +3,18 @@ from sqlalchemy.orm import Session, joinedload
 
 from app.database import get_db
 from app.deps import get_or_404
-from app.models import Application, Student
+from app.models import Application, Program, Student
 from app.schemas import (
     CandidateDetailOut,
     CandidateOut,
     GradeOut,
     GradeTrimester,
+    PrepareStats,
     ProgramOut,
+    ProgramStats,
     StatusUpdate,
     SubjectGap,
+    TopSchool,
 )
 
 router = APIRouter(prefix="/api", tags=["prepare"])
@@ -126,6 +129,69 @@ def get_candidate(application_id: int, db: Session = Depends(get_db)):
         comparison=_build_comparison(
             grades_by_subject, program.key_subjects or {}, program.min_average
         ),
+    )
+
+
+@router.get("/prepare/stats", response_model=PrepareStats)
+def get_prepare_stats(db: Session = Depends(get_db)):
+    """Stats agrégées côté école : candidats par formation, score moyen, top lycées."""
+    apps = (
+        db.query(Application)
+        .options(joinedload(Application.student).joinedload(Student.school))
+        .all()
+    )
+    programs = db.query(Program).all()
+
+    by_pid: dict[int, list[Application]] = {}
+    for a in apps:
+        by_pid.setdefault(a.program_id, []).append(a)
+
+    by_program: list[ProgramStats] = []
+    for program in programs:
+        program_apps = by_pid.get(program.id, [])
+        if not program_apps:
+            continue
+
+        scores = [a.score_snapshot for a in program_apps if a.score_snapshot is not None]
+        avg_score = round(sum(scores) / len(scores), 1) if scores else None
+
+        school_counts: dict[str, int] = {}
+        for application in program_apps:
+            if application.student and application.student.school:
+                name = application.student.school.name
+                school_counts[name] = school_counts.get(name, 0) + 1
+        top_schools = sorted(
+            (TopSchool(name=name, count=count) for name, count in school_counts.items()),
+            key=lambda s: s.count,
+            reverse=True,
+        )[:3]
+
+        fill_rate = (
+            round(len(program_apps) / program.capacity, 3)
+            if program.capacity
+            else None
+        )
+
+        by_program.append(
+            ProgramStats(
+                program_id=program.id,
+                program_name=program.name,
+                program_type=program.type,
+                institution=program.institution,
+                capacity=program.capacity,
+                nb_candidates=len(program_apps),
+                avg_score=avg_score,
+                fill_rate=fill_rate,
+                top_schools=top_schools,
+            )
+        )
+
+    by_program.sort(key=lambda s: s.nb_candidates, reverse=True)
+
+    return PrepareStats(
+        total_programs=len(programs),
+        total_candidates=len(apps),
+        by_program=by_program,
     )
 
 

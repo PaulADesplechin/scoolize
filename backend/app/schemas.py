@@ -152,3 +152,26 @@ class CandidateDetailOut(BaseModel):
 
 class StatusUpdate(BaseModel):
     status: Literal["submitted", "accepted", "pending", "rejected"]
+
+
+class TopSchool(BaseModel):
+    name: str
+    count: int
+
+
+class ProgramStats(BaseModel):
+    program_id: int
+    program_name: str
+    program_type: ProgramType
+    institution: str
+    capacity: int | None = None
+    nb_candidates: int
+    avg_score: float | None = None
+    fill_rate: float | None = None
+    top_schools: list[TopSchool]
+
+
+class PrepareStats(BaseModel):
+    total_programs: int
+    total_candidates: int
+    by_program: list[ProgramStats]

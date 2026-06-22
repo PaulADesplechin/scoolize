@@ -102,6 +102,29 @@ export interface CandidateDetail {
 
 export type CandidateStatus = "submitted" | "accepted" | "pending" | "rejected";
 
+export interface TopSchool {
+  name: string;
+  count: number;
+}
+
+export interface ProgramStats {
+  program_id: number;
+  program_name: string;
+  program_type: ProgramType;
+  institution: string;
+  capacity: number | null;
+  nb_candidates: number;
+  avg_score: number | null;
+  fill_rate: number | null;
+  top_schools: TopSchool[];
+}
+
+export interface PrepareStats {
+  total_programs: number;
+  total_candidates: number;
+  by_program: ProgramStats[];
+}
+
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 const TOKEN_KEY = "scoolize_token";
@@ -238,4 +261,6 @@ export const api = {
       method: "PATCH",
       body: JSON.stringify({ status }),
     }),
+
+  prepareStats: () => request<PrepareStats>("/api/prepare/stats"),
 };

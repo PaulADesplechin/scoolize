@@ -217,3 +217,42 @@ def test_candidate_status_update(client, register):
 
     r3 = client.patch("/api/candidates/9999", json={"status": "accepted"})
     assert r3.status_code == 404
+
+
+def test_prepare_stats(client, register):
+    sid1, h1 = register("stat1@example.com")
+    sid2, h2 = register("stat2@example.com")
+
+    p1 = client.post(
+        "/api/programs",
+        json={
+            "name": "BUT Informatique",
+            "institution": "IUT",
+            "type": "selective",
+            "capacity": 100,
+        },
+    ).json()["id"]
+    p2 = client.post(
+        "/api/programs",
+        json={
+            "name": "Licence Maths",
+            "institution": "U",
+            "type": "non_selective",
+            "capacity": 500,
+        },
+    ).json()["id"]
+
+    client.post("/api/applications", headers=h1, json={"program_id": p1})
+    client.post("/api/applications", headers=h2, json={"program_id": p1})
+    client.post("/api/applications", headers=h1, json={"program_id": p2})
+
+    r = client.get("/api/prepare/stats")
+    assert r.status_code == 200
+    data = r.json()
+    assert data["total_candidates"] == 3
+    by_pid = {p["program_id"]: p for p in data["by_program"]}
+    assert by_pid[p1]["nb_candidates"] == 2
+    assert by_pid[p2]["nb_candidates"] == 1
+    assert by_pid[p1]["fill_rate"] == 0.02
+    assert by_pid[p2]["fill_rate"] == 0.002
+    assert by_pid[p1]["nb_candidates"] >= by_pid[p2]["nb_candidates"]
