@@ -153,3 +153,67 @@ def test_candidates_endpoint_for_prepare(client, register):
     assert any(c["program_id"] == pid and c["application_id"] for c in candidates)
     filtered = client.get(f"/api/candidates?program_id={pid}").json()
     assert filtered and all(c["program_id"] == pid for c in filtered)
+
+
+def test_candidate_detail_returns_evolution_and_comparison(client, register):
+    sid, headers = register("detail@example.com")
+    client.post(
+        f"/api/students/{sid}/grades",
+        headers=headers,
+        json=[
+            {"subject": "Mathématiques", "value": 17},
+            {"subject": "Physique-Chimie", "value": 16},
+        ],
+    )
+    pid = client.post(
+        "/api/programs",
+        json={
+            "name": "BUT Informatique",
+            "institution": "IUT",
+            "type": "selective",
+            "min_average": 12.0,
+            "key_subjects": {"Mathématiques": 0.5, "NSI": 0.3},
+        },
+    ).json()["id"]
+    aid = client.post(
+        "/api/applications", headers=headers, json={"program_id": pid}
+    ).json()["id"]
+
+    r = client.get(f"/api/candidates/{aid}")
+    assert r.status_code == 200
+    data = r.json()
+    assert data["application_id"] == aid
+    assert data["student_id"] == sid
+    assert len(data["grades"]) == 2
+
+    assert {e["subject"] for e in data["evolution"]} == {"Mathématiques", "Physique-Chimie"}
+    maths_evolution = next(e for e in data["evolution"] if e["subject"] == "Mathématiques")
+    assert maths_evolution["t3"] == 17.0
+    assert maths_evolution["t2"] < maths_evolution["t3"]
+    assert maths_evolution["t1"] < maths_evolution["t2"]
+
+    by_subject = {c["subject"]: c for c in data["comparison"]}
+    assert by_subject["Mathématiques"]["student_average"] == 17
+    assert by_subject["Mathématiques"]["meets_minimum"] is True
+    assert by_subject["NSI"]["student_average"] is None
+
+
+def test_candidate_status_update(client, register):
+    sid, headers = register("status@example.com")
+    pid = client.post(
+        "/api/programs",
+        json={"name": "Licence", "institution": "U", "type": "non_selective"},
+    ).json()["id"]
+    aid = client.post(
+        "/api/applications", headers=headers, json={"program_id": pid}
+    ).json()["id"]
+
+    r = client.patch(f"/api/candidates/{aid}", json={"status": "accepted"})
+    assert r.status_code == 200
+    assert r.json()["status"] == "accepted"
+
+    r2 = client.patch(f"/api/candidates/{aid}", json={"status": "rejected"})
+    assert r2.json()["status"] == "rejected"
+
+    r3 = client.patch("/api/candidates/9999", json={"status": "accepted"})
+    assert r3.status_code == 404

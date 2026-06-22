@@ -115,3 +115,40 @@ class MatchResult(BaseModel):
     category: ProgramType
     eligible: bool
     rationale: str
+
+
+class GradeTrimester(BaseModel):
+    """Évolution synthétisée d'une note sur 3 trimestres pour le graphique."""
+
+    subject: str
+    t1: float
+    t2: float
+    t3: float
+
+
+class SubjectGap(BaseModel):
+    """Comparatif d'une matière clé : note candidat vs seuil de la formation."""
+
+    subject: str
+    student_average: float | None = None
+    program_minimum: float | None = None
+    weight: float
+    meets_minimum: bool
+
+
+class CandidateDetailOut(BaseModel):
+    application_id: int
+    status: str
+    score: float | None = None
+    student_id: int
+    student_name: str
+    student_school: str | None = None
+    student_track: str | None = None
+    program: ProgramOut
+    grades: list[GradeOut]
+    evolution: list[GradeTrimester]
+    comparison: list[SubjectGap]
+
+
+class StatusUpdate(BaseModel):
+    status: Literal["submitted", "accepted", "pending", "rejected"]

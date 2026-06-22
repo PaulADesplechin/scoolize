@@ -71,6 +71,37 @@ export interface Candidate {
   status: string;
 }
 
+export interface GradeTrimester {
+  subject: string;
+  t1: number;
+  t2: number;
+  t3: number;
+}
+
+export interface SubjectGap {
+  subject: string;
+  student_average: number | null;
+  program_minimum: number | null;
+  weight: number;
+  meets_minimum: boolean;
+}
+
+export interface CandidateDetail {
+  application_id: number;
+  status: string;
+  score: number | null;
+  student_id: number;
+  student_name: string;
+  student_school: string | null;
+  student_track: string | null;
+  program: Program;
+  grades: Grade[];
+  evolution: GradeTrimester[];
+  comparison: SubjectGap[];
+}
+
+export type CandidateStatus = "submitted" | "accepted" | "pending" | "rejected";
+
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 const TOKEN_KEY = "scoolize_token";
@@ -198,4 +229,13 @@ export const api = {
 
   candidates: (programId?: number) =>
     request<Candidate[]>(`/api/candidates${programId ? `?program_id=${programId}` : ""}`),
+
+  candidateDetail: (applicationId: number) =>
+    request<CandidateDetail>(`/api/candidates/${applicationId}`),
+
+  updateCandidateStatus: (applicationId: number, status: CandidateStatus) =>
+    request<Candidate>(`/api/candidates/${applicationId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
 };

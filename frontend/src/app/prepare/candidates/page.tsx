@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Download } from "lucide-react";
 
 import { api, type Candidate, type Program } from "@/lib/api";
@@ -56,6 +57,7 @@ function exportCsv(rows: Candidate[]) {
 }
 
 export default function CandidatesPage() {
+  const router = useRouter();
   const [programs, setPrograms] = useState<Program[]>([]);
   const [candidates, setCandidates] = useState<Candidate[] | null>(null);
   const [filter, setFilter] = useState("");
@@ -155,7 +157,13 @@ export default function CandidatesPage() {
               </TableHeader>
               <TableBody>
                 {candidates.map((c) => (
-                  <TableRow key={c.application_id}>
+                  <TableRow
+                    key={c.application_id}
+                    onClick={() =>
+                      router.push(`/prepare/candidates/${c.application_id}`)
+                    }
+                    className="cursor-pointer transition-colors hover:bg-muted/50"
+                  >
                     <TableCell>
                       <div className="font-medium">{c.student_name}</div>
                       <div className="text-xs text-muted-foreground">
