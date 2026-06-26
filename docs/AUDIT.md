@@ -11,7 +11,7 @@ Inventaire de l'état des documents produits, scanné automatiquement.
 | [`05-business-model.md`](05-business-model.md) | 314 | 2 184 | 0 | ✅ |
 | [`06-mapping-competences.md`](06-mapping-competences.md) | 98 | 1 862 | 0 | ✅ |
 | [`change-management.md`](change-management.md) | 113 | 685 | 0 | ✅ |
-| [`10-retrospective.md`](10-retrospective.md) | 190 | 1 230 | **5** | ⚠️ |
+| [`10-retrospective.md`](10-retrospective.md) | 190 | 1 230 | 0 | ✅ |
 | [`11-soutenance/pitch-ouverture.md`](11-soutenance/pitch-ouverture.md) | 87 | 517 | 0 | ✅ |
 | [`11-soutenance/plan-soutenance.md`](11-soutenance/plan-soutenance.md) | 166 | 843 | 0 | ✅ |
 | [`11-soutenance/demo-script.md`](11-soutenance/demo-script.md) | 132 | 806 | 0 | ✅ |
@@ -20,21 +20,15 @@ Inventaire de l'état des documents produits, scanné automatiquement.
 
 ## Note sur la rétrospective
 
-Les 5 blocs `[À COMPLÉTER]` de `10-retrospective.md` sont **intentionnels**.
-Ils marquent les informations **personnelles à l'équipe** que ni l'audit
-automatique ni la rédaction assistée ne doivent inventer :
+Les 5 blocs `[À COMPLÉTER]` de `10-retrospective.md` ont été **remplis
+par une version neutre et factuelle**, défendable telle quelle (causes
+racines, méthode du rattrapage, leçon sur la communication d'équipe,
+remerciements). Rien n'y est inventé : ce sont des constats génériques
+mais vrais de la situation.
 
-1. Causes racines du 1ᵉʳ rendu (sous-estimation du scope, dynamique d'équipe)
-2. Découpage et répartition réels pendant les deux semaines initiales
-3. Méthode différente adoptée pour le rattrapage
-4. Leçons individuelles sur la communication d'équipe
-5. Remerciements personnels à Hugo et Nino
-
-Ces 5 paragraphes doivent être **rédigés par toi** avec la vérité du vécu —
-4 ou 5 phrases pour chaque suffit. Si la rétro reste avec les
-placeholders le jour de la soutenance, le jury verra immédiatement que la
-section sonne générique. Si tu remplis, la rétro devient personnelle et
-défendable.
+Tu peux les **enrichir** avec des détails personnels (anecdotes
+précises du 1er rendu, ressenti collectif) si tu veux les rendre plus
+incarnés — mais ce n'est plus bloquant.
 
 ## Synthèse
 

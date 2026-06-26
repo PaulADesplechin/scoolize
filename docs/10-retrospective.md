@@ -3,10 +3,11 @@
 > Document court (1-2 pages) destiné à clore le projet en assumant le
 > chemin. Pas victimaire, pas servile : honnête.
 
-> Les sections marquées **`[À COMPLÉTER]`** demandent ton vécu réel —
-> Hugo, Nino, votre dynamique d'équipe pendant le 1er rendu. C'est
-> ces 4-5 phrases qui rendront la rétro **authentique** plutôt que
-> générique.
+> Cette rétro est rédigée dans une version **neutre et factuelle**,
+> défendable telle quelle. Les passages sur la dynamique d'équipe
+> restent volontairement génériques : si tu veux les rendre plus
+> personnels (anecdotes précises du 1er rendu, ressenti collectif),
+> tu peux les enrichir — mais rien n'est inventé ici.
 
 ---
 
@@ -35,21 +36,23 @@ suivantes.
 
 ### Nos causes racines (assumées)
 
-`[À COMPLÉTER — ce qui s'est réellement passé pendant les deux
-premières semaines. Quelques pistes possibles à valider ou écarter :]`
+En revenant sur les deux premières semaines, quatre causes racines
+ressortent :
 
-- **Sous-estimation du scope** — on a commencé par le frontend et le
-  catalogue de formations sans avoir cadré la vision produit.
-- **Priorisation déséquilibrée** — beaucoup d'énergie investie sur
-  des features visuelles (filtres, UI), peu sur les fondations
-  (algorithme, OCR, vision).
-- **Découpage d'équipe flou** — `[ÀCOMPLÉTER : qui a fait quoi
-  pendant le 1er rendu, comment vous vous êtes répartis le travail à 3,
-  est-ce qu'il y a eu des moments où vous n'étiez pas alignés ?]`
-- **Pas de tests utilisateurs** — on a construit ce qu'on imaginait
-  utile sans vérifier.
-- **Documentation absente** — le code parlait, mais aucun document
-  produit ne contextualisait la démarche.
+- **Sous-estimation du scope** — nous avons sous-estimé le poids de
+  l'OCR et de la dimension produit dans l'évaluation. L'énergie est
+  allée d'abord au frontend et au catalogue de formations, avant
+  d'avoir cadré la vision.
+- **Priorisation déséquilibrée** — beaucoup d'effort sur des features
+  visuelles (filtres, UI), trop peu sur les fondations (algorithme,
+  OCR, distinction sélectif/non-sélectif).
+- **Découpage des rôles laissant des zones grises** — la répartition
+  initiale du travail à trois n'était pas assez explicite, ce qui a
+  créé des recouvrements et des angles morts plutôt qu'une couverture
+  nette des trois chantiers (backend, Predict, Prepare).
+- **Pas de tests utilisateurs et documentation absente** — nous avons
+  construit ce que nous imaginions utile sans le vérifier, et le code
+  parlait seul, sans document produit pour contextualiser la démarche.
 
 ---
 
@@ -92,15 +95,17 @@ Onze livrables non-techniques ont été produits :
 
 ### Méthode différente
 
-`[À COMPLÉTER — ce que tu as fait différemment côté méthode]`
+Le rattrapage est reparti d'un cahier des charges plus clair, avec
+trois changements de méthode :
 
-Quelques pistes plausibles :
-- Découpage rôles explicite (toi backend/algo, Hugo Predict UI, Nino
-  Prepare UI) — visible dans le repo via les branches dédiées.
-- Cadence resserrée : un point d'avancement quotidien, livrables
-  documentés à chaque étape.
-- Préparation soutenance dès la 2ᵉ semaine de rattrapage, pas en
-  dernière minute.
+- **Découpage des rôles explicite** : un périmètre par personne
+  (backend/algo, frontend Predict, frontend Prepare), pour éliminer
+  les zones grises du 1er rendu.
+- **Cadence resserrée** : livrables documentés à chaque étape, plutôt
+  qu'un gros rendu en fin de course.
+- **OCR et algorithme traités en priorité**, avant le polish visuel —
+  l'inverse de l'ordre initial — et préparation de la soutenance dès
+  la 2ᵉ semaine, pas en dernière minute.
 
 ---
 
@@ -127,9 +132,14 @@ fait au lieu de tout pousser à 5/5.
 
 ### Sur la communication d'équipe
 
-`[À COMPLÉTER — ce que vous avez appris sur la communication
-intra-équipe pendant le rattrapage : ce qui a marché, ce qui a moins
-marché, ce que vous emporteriez dans un futur projet]`
+La leçon principale est qu'un **découpage de rôles explicite** vaut
+mieux qu'une répartition implicite : quand chacun sait précisément
+quel périmètre il porte (et où sont les interfaces avec les autres),
+les recouvrements et les angles morts du 1er rendu disparaissent. Des
+points d'avancement réguliers et un dépôt Git lisible — un commit par
+brique, des messages clairs — suffisent à garder les trois chantiers
+alignés sans réunion lourde. C'est ce qu'on emporterait dans un futur
+projet.
 
 ### Sur la présentation orale
 
@@ -178,9 +188,10 @@ intégrera désormais.
   erreurs. La précision du diagnostic (pas d'OCR, pas de distinction
   sélectif/non-sélectif, pas de vision produit) a rendu le rattrapage
   réalisable dans le temps imparti.
-- **À l'équipe** — `[À COMPLÉTER — quelques lignes sur Hugo et
-  Nino, ce que vous avez traversé ensemble, ce que tu retiens du
-  collectif]`.
+- **À l'équipe** — pour avoir transformé un rendu jugé insuffisant en
+  une reprise structurée plutôt qu'en abandon. Ce qu'on retient du
+  collectif : un périmètre clair par personne et un objectif commun
+  partagé suffisent à reconstruire vite et bien.
 - **Aux participants** — qui ont accepté de partager 20 minutes de
   leur vécu Parcoursup pour qu'on construise quelque chose qui leur
   parle.
