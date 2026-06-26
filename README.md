@@ -94,13 +94,28 @@ l'OCR de bout en bout.
 - [Slides de soutenance](docs/slides/slides.md) · [Script de démo](docs/demo-script.md)
 - [Données & sources](data/README.md)
 
+## Du 1er rendu (V1) au rattrapage (V2)
+
+Le premier rendu avait été jugé insuffisant. Chaque reproche a été adressé :
+
+| Reproche du jury (V1) | Réponse (V2) |
+|------------------------|--------------|
+| Pas d'OCR, saisie manuelle | OCR Tesseract intégré, extraction validée sur les bulletins de démo, validation humaine avant matching ([`backend/ocr/`](backend/ocr/)) |
+| Prévisions imprécises | Régression logistique scikit-learn + **intervalle de confiance** affiché ([`backend/matching/`](backend/matching/)) |
+| Pas de distinction sélectif / non-sélectif | Deux branches d'algorithme distinctes + badges UI différenciés |
+| Présentation trop technique, manque de vision produit | 11 livrables produit dans [`docs/`](docs/) : audit, personas, business model, identité, conformité RGPD, change management… |
+
+## Repo
+
+[github.com/PaulADesplechin/scoolize](https://github.com/PaulADesplechin/scoolize)
+
 ## Équipe
 
-| Membre | Domaine |
-|--------|---------|
-| Paul-Adrien Desplechin | Backend, OCR, algorithme de matching, intégration |
-| Hugo | Frontend Predict (parcours étudiant) |
-| Nino | Frontend Prepare (parcours école) |
+| Membre | GitHub | Domaine |
+|--------|--------|---------|
+| Paul-Adrien Desplechin | — | Backend, OCR, algorithme de matching, intégration |
+| Hugo Ladrat | [@Hugoldt](https://github.com/Hugoldt) | Frontend Predict (parcours étudiant) |
+| Nino Taravella | [@AzizVapiano](https://github.com/AzizVapiano) | Frontend Prepare (parcours école) |
 
 ## Licence
 
