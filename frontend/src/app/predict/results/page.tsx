@@ -86,6 +86,9 @@ export default function ResultsPage() {
   if (!student) return <ProfileRequired />;
 
   const noGrades = (student.grades?.length ?? 0) === 0;
+  const topSubjects = [...(student.grades ?? [])]
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 3);
 
   return (
     <div className="space-y-6">
@@ -96,6 +99,37 @@ export default function ResultsPage() {
         <p className="text-muted-foreground">
           Classées par adéquation et probabilité d&apos;admission.
         </p>
+      </div>
+
+      <div className="rounded-xl border bg-muted/40 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Rappel : votre profil
+            </p>
+            <p className="font-semibold">
+              {student.first_name} {student.last_name}
+            </p>
+            {student.track && (
+              <p className="text-sm text-muted-foreground">{student.track}</p>
+            )}
+          </div>
+          {topSubjects.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-xs text-muted-foreground">
+                Meilleures matières :
+              </span>
+              {topSubjects.map((g) => (
+                <span
+                  key={g.id ?? g.subject}
+                  className="rounded-full bg-background px-2 py-0.5 text-xs font-medium"
+                >
+                  {g.subject} {g.value.toFixed(1)}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {noGrades && (

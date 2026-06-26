@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
@@ -14,9 +15,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr">
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
         <SiteHeader />
-        <main className="mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
+        <SiteFooter />
         <Toaster richColors position="top-center" />
       </body>
     </html>
