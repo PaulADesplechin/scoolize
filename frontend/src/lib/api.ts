@@ -155,6 +155,18 @@ export function clearSession(): void {
   window.localStorage.removeItem(STUDENT_KEY);
 }
 
+/** Extrait l'id étudiant du `sub` d'un JWT (le login ne renvoie que le token). */
+export function studentIdFromToken(token: string): number | null {
+  try {
+    const payload = token.split(".")[1];
+    const json = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
+    const sub = (JSON.parse(json) as { sub?: string }).sub;
+    return sub ? Number(sub) : null;
+  } catch {
+    return null;
+  }
+}
+
 async function errorDetail(res: Response): Promise<string> {
   try {
     const data = (await res.json()) as { detail?: string | { msg: string }[] };
