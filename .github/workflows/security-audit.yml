@@ -4,20 +4,77 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
   schedule:
+    # Lundi 6h UTC (7h/8h Paris selon DST)
     - cron: "0 6 * * 1"
 
-permissions:
-  contents: read
-
 jobs:
-  gitleaks:
+  audit:
+    name: npm audit (high+)
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Detect package manager
+        id: pm
+        run: |
+          if [ -f pnpm-lock.yaml ]; then echo "manager=pnpm" >> $GITHUB_OUTPUT
+          elif [ -f yarn.lock ]; then echo "manager=yarn" >> $GITHUB_OUTPUT
+          elif [ -f bun.lockb ]; then echo "manager=bun" >> $GITHUB_OUTPUT
+          else echo "manager=npm" >> $GITHUB_OUTPUT; fi
+      - name: Install deps (npm)
+        if: steps.pm.outputs.manager == 'npm'
+        run: npm ci --no-audit --no-fund
+      - name: Install deps (pnpm)
+        if: steps.pm.outputs.manager == 'pnpm'
+        uses: pnpm/action-setup@v4
+        with: { version: 9, run_install: true }
+      - name: Run audit
+        run: |
+          case "${{ steps.pm.outputs.manager }}" in
+            pnpm) pnpm audit --audit-level=high ;;
+            *)    npm audit --audit-level=high ;;
+          esac
+        continue-on-error: true
+
+  gitleaks:
+    name: Secret scanning (gitleaks)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: false
+      - name: Scan secrets
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz -o /tmp/gitleaks.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          if [ -f .gitleaks.toml ]; then
+            /tmp/gitleaks detect --source . --config .gitleaks.toml --no-banner --redact --exit-code 1
+          else
+            /tmp/gitleaks detect --source . --no-banner --redact --exit-code 1
+          fi
+
+  codeql:
+    name: CodeQL (JS/TS)
+    # Non-bloquant : CodeQL nécessite Advanced Security sur repo privé (payant).
+    # Le job reste utile sur les repos publics et remonte les alertes quand l'option est activée.
+    continue-on-error: true
+    if: github.event.repository.visibility == 'public' || github.event.repository.security_and_analysis.advanced_security.status == 'enabled'
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript-typescript"
