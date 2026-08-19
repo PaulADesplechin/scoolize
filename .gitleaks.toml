@@ -1,0 +1,33 @@
+title = "Gitleaks — configuration projet"
+
+# Base rules embarquées
+[extend]
+useDefault = true
+
+# Allowlist des placeholders légitimes des .env.example.
+# Aucun secret réel ne doit passer ce filtre.
+[allowlist]
+description = "Placeholders documentés — non secrets"
+regexes = [
+  '''sk-ant-\.\.\.replace-me\.\.\.''',
+  '''sk_test_\.\.\.''',
+  '''pk_test_\.\.\.''',
+  '''re_xxxxxxxx''',
+  '''whsec_xxxxxxxx''',
+  '''change-me[-_a-z0-9]*''',
+  '''your_[a-z_]+_here''',
+  '''example\.com''',
+  '''pplx-\.\.\.''',
+  '''eyJhbGciOi\.\.\.''',
+  '''xxxxxxxxxxxx\.supabase\.co''',
+  '''\[PROJECT_ID\]''',
+  '''\[PASSWORD\]''',
+]
+paths = [
+  '''(.*?)(png|jpg|gif|doc|docx|pdf|xls|xlsx|zip|lockb?)$''',
+  '''.*\.env\.example$''',
+  '''.*\.md$''',
+  '''pnpm-lock\.yaml$''',
+  '''package-lock\.json$''',
+  '''yarn\.lock$''',
+]
